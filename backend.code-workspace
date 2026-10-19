@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../Downloads/backend"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "SmartStudyPlanner"
+	}
+}

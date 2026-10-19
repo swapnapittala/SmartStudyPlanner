@@ -1,0 +1,222 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Smart Study Planner</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body class="logged-in">
+
+    <header>
+        <h1>📚 Smart Study Planner</h1>
+        <p>Plan your studies and achieve your goals</p>
+    </header>
+
+    <nav>
+       <button onclick="showSection('dashboard')">Dashboard</button>
+       <button onclick="showSection('subjects')">Subjects</button>
+<button onclick="showSection('timetable')">Timetable</button>
+
+<button onclick="showSection('tasks')">Tasks</button>
+<button onclick="showSection('quiz')">Quiz</button>
+   <button onclick="logout()">🚪 Logout</button>    
+    </nav>
+
+    <main>
+       
+<section id="dashboard" class="section">
+    <h2>📊 Study Dashboard</h2>
+    <p>Here is your study overview.</p>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card">
+            <h3>Total Subjects</h3>
+            <p id="progressSubjects">0</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Total Tasks</h3>
+            <p id="progressTasks">0</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Completed Tasks</h3>
+            <p id="completedTasks">0</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Task Progress</h3>
+            <p id="progressCount">0%</p>
+        </div>
+    </div>
+
+    <div class="progress-container">
+        <h3>Overall Study Progress</h3>
+        <div class="progress-bar">
+            <div id="progressBar" class="progress-fill"></div>
+        </div>
+        <p id="progressText">0% completed</p>
+    </div>
+    <div class="dashboard-card">
+    <h3>📚 My Subjects</h3>
+    <ul id="dashboardSubjectList"></ul>
+</div>
+</section>
+
+
+        
+<section id="subjects" class="section hidden">
+    <h2>📚 My Subjects</h2>
+
+    <input
+        type="text"
+        id="subjectInput"
+        placeholder="Enter subject name"
+    >
+
+    <button onclick="addSubject()">Add Subject</button>
+
+    <ul id="subjectList"></ul>
+</section>
+
+
+       
+<section id="tasks" class="section hidden">
+    <h2>✅ Study Tasks</h2>
+
+    <div class="task-form">
+        <input
+            type="text"
+            id="taskInput"
+            placeholder="Enter study task"
+        >
+
+        <input
+            type="text"
+            id="taskSubject"
+            placeholder="Enter subject"
+        >
+
+        <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <div id="taskList"></div>
+</section>
+<section id="timetable" class="section hidden">
+    <h2>📅 My Study Timetable</h2>
+
+    <div class="timetable-form">
+        <select id="day">
+            <option value="">Select Day</option>
+            <option value="Monday">Monday</option>
+            <option value="Tuesday">Tuesday</option>
+            <option value="Wednesday">Wednesday</option>
+            <option value="Thursday">Thursday</option>
+            <option value="Friday">Friday</option>
+            <option value="Saturday">Saturday</option>
+            <option value="Sunday">Sunday</option>
+        </select>
+
+        <input type="text" id="timetableSubject"
+               placeholder="Enter subject">
+
+        <input type="time" id="startTime">
+
+        <input type="time" id="endTime">
+
+        <input type="text" id="topic"
+               placeholder="Enter topic">
+
+        <button onclick="addTimetable()">Add to Timetable</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>Subject</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Topic</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="timetableList"></tbody>
+    </table>
+</section>
+
+   
+<section id="quiz" class="section hidden">
+    <h2>🧠 Study Quiz</h2>
+
+    <div class="quiz-menu">
+        <button onclick="showQuizOption('addQuestionForm')">
+            ➕ Add Questions
+        </button>
+
+        <button onclick="showQuizOption('studentQuestionsSection')">
+            📋 My Questions
+        </button>
+
+        <button onclick="showQuizOption('takeQuizSection')">
+            🧠 Take Quiz
+        </button>
+    </div>
+
+    <div id="addQuestionForm" class="hidden add-quiz">
+        <h3>➕ Add Your Own Question</h3>
+
+        <select id="quizQuestionSubject">
+            <option value="">Select Subject</option>
+        </select>
+
+        <input type="text" id="newQuestion" placeholder="Enter question">
+        <input type="text" id="optionA" placeholder="Option A">
+        <input type="text" id="optionB" placeholder="Option B">
+        <input type="text" id="optionC" placeholder="Option C">
+        <input type="text" id="optionD" placeholder="Option D">
+
+        <select id="correctAnswer">
+            <option value="">Select Correct Answer</option>
+            <option value="A">Option A</option>
+            <option value="B">Option B</option>
+            <option value="C">Option C</option>
+            <option value="D">Option D</option>
+        </select>
+
+        <br><br>
+        <button onclick="addQuizQuestion()">➕ Save Question</button>
+    </div>
+
+    <div id="studentQuestionsSection" class="hidden">
+        <h3>📋 My Saved Questions</h3>
+        <p>Your saved questions appear here.</p>
+        <div id="quizList"></div>
+    </div>
+
+    <div id="takeQuizSection" class="hidden">
+        <h3>📝 Take Quiz</h3>
+
+        <select id="quizSubject">
+            <option value="">Select Subject</option>
+        </select>
+
+        <button onclick="startQuiz()">▶️ Start Quiz</button>
+
+        <div id="quizContainer">
+            <h3 id="question">Click Start Quiz to begin</h3>
+            <div id="options"></div>
+            <button onclick="previousQuestion()">⬅️ Previous Question</button>
+<button onclick="nextQuestion()">Next Question ➡️</button>
+            <p id="quizResult"></p>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+</body>
+</html>
